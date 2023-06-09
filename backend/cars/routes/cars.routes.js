@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 import {
-    listCars,
-    getCar,
-    editCar,
-    addCar,
-    deleteCar,
-} from '../controllers/cars.controllers.js';
+  listCars,
+  getCar,
+  editCar,
+  addCar,
+  deleteCar,
+} from "../controllers/cars.controllers.js";
 
 const router = express.Router();
 
@@ -13,38 +13,38 @@ const router = express.Router();
  * @swagger
  * components:
  *  schemas:
- *      Pet:
+ *      Car:
  *          type: object
  *          properties:
  *              id:
  *                  type: integer
- *                  description: Pet id
- *              name:
+ *                  description: Car id
+ *              make:
  *                  type: string
- *                  description: Pet name
- *              age:
+ *                  description: Car make
+ *              model:
+ *                  type: string
+ *                  description: Car model
+ *              year:
  *                  type: integer
- *                  description: Pet age
- *              type:
+ *                  description: Car year of  manufacture
+ *              color:
  *                  type: string
- *                  description: Pet type
- *              breed:
- *                  type: string
- *                  description: Pet breed
+ *                  description: Car color
  *      example:
  *          id: 1
- *          name: Rexaurus
- *          age: 3
- *          breed: labrador
- *          type: dog
+ *          make: Porsche
+ *          model: Panamera
+ *          year: 2015
+ *          color: white
  */
 
 /**
  * @swagger
- * /pets:
+ * /cars:
  *  get:
- *      summary: Get all pets
- *      description: Get all pets
+ *      summary: Get all cars
+ *      description: Get all cars
  *      responses:
  *          200:
  *              description: Success
@@ -55,17 +55,17 @@ router.get("/", listCars);
 
 /**
  * @swagger
- * /pets/{id}:
+ * /cars/{id}:
  *  get:
- *      summary: Get pet detail
- *      description: Get pet detail
+ *      summary: Get car detail
+ *      description: Get car detail
  *      parameters:
  *          - in: path
  *            name: id
  *            schema:
  *              type: integer
  *            required: true
- *            description: Pet id
+ *            description: Car id
  *      responses:
  *          200:
  *              description: Success
@@ -76,28 +76,28 @@ router.get("/:id", getCar);
 
 /**
  * @swagger
- * /pets/{id}:
+ * /cars/{id}:
  *  put:
- *     summary: Edit pet
- *     description: Edit pet
+ *     summary: Edit car
+ *     description: Edit car
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: Pet id
+ *         description: Car id
  *     requestBody:
- *       description: A JSON object containing pet information
+ *       description: A JSON object containing car information
  *       content:
  *         application/json:
  *           schema:
- *              $ref: '#/components/schemas/Pet'
+ *              $ref: '#/components/schemas/Car'
  *           example:
- *              name: Rexaurus
- *              age: 12
- *              breed: labrador
- *              type: dog
+ *              make: Porsche
+ *              model: Panamera
+ *              year: 2015
+ *              color: white
  *     responses:
  *     200:
  *        description: Success
@@ -109,21 +109,21 @@ router.put("/:id", editCar);
 
 /**
  * @swagger
- * /pets:
+ * /cars:
  *  post:
- *      summary: Add pet
- *      description: Add pet
+ *      summary: Add car
+ *      description: Add car
  *      requestBody:
  *          description: A JSON object containing pet information
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Pet'
+ *                      $ref: '#/components/schemas/Car'
  *                  example:
- *                      name: Rexaurus
- *                      age: 12
- *                      breed: Labrador
- *                      type: dog
+ *                      make: Porsche
+ *                      model: Panamera
+ *                      year: 2015
+ *                      color: white
  *      responses:
  *          200:
  *              description: Success
@@ -134,17 +134,17 @@ router.post("/", addCar);
 
 /**
  * @swagger
- * /pets/{id}:
+ * /cars/{id}:
  *  delete:
- *      summary: Delete pet
- *      description: Delete pet
+ *      summary: Delete car
+ *      description: Delete car
  *      parameters:
  *          - in: path
  *            name: id
  *            schema:
  *              type: integer
  *            required: true
- *            description: Pet id
+ *            description: Car id
  *      responses:
  *          200:
  *              description: Success
