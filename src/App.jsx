@@ -6,7 +6,7 @@ const CarDetail = lazy(() => import('./pages/CarDetail.jsx'))
 const EditCar = lazy(() => import('./pages/EditCar.jsx'))
 const AddCar = lazy(() => import('./pages/AddCar.jsx'))
 
-function App() {
+export default function App() {
   const [carToEdit, setCarToEdit] = useState(null)
 
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Suspense fallback={<></>}>
+              <Suspense fallback={<p>Loading...</p>}>
                 <CarList />
               </Suspense>
             }
@@ -30,7 +30,7 @@ function App() {
           <Route
             path="/:carId"
             element={
-              <Suspense fallback={<></>}>
+              <Suspense fallback={<p>Loading...</p>}>
                 <CarDetail setCarToEdit={setCarToEdit} />
               </Suspense>
             }
@@ -38,7 +38,7 @@ function App() {
           <Route
             path="/:carId/edit"
             element={
-              <Suspense fallback={<></>}>
+              <Suspense fallback={<p>Loading...</p>}>
                 <EditCar carToEdit={carToEdit} />
               </Suspense>
             }
@@ -56,5 +56,3 @@ function App() {
     </div>
   )
 }
-
-export default App

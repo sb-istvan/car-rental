@@ -17,9 +17,7 @@ The initial release is based on [this tutorial on freecodecamp.org](https://www.
 
 ## Backend
 
-The backend is based on Express. Data is stored in an array of objects. All modifications are reset on reloading the server. There is also an API documentation available in `/api-docs` using Swagger.
-
-To start the server, go to `backend` directory and run `npm start`.
+The backend is based on Supabase (open-source Firebase alternative). Data is stored in posgreSQL tables.
 
 ## Frontend
 
@@ -28,6 +26,11 @@ For the frontend, React and React Router are used.
 To start the development server, go to `frontend` directory and type `npm run dev`
 
 ## Changelog
+
+**2023-09-06**
+
+- [backend] [major change] Express is replaced by Supabase instance in the cloud. This way all data manipulation is saved to the database. Supabase has many services ready to be used out of the box. The next feature I plan to implement is authentication.
+- [frontend] Data fetching is changed from Express to Supabase's own solution. Axios is removed from the node packages for now.
 
 **2023-06-09**
 
@@ -38,4 +41,4 @@ To start the development server, go to `frontend` directory and type `npm run de
 **2023-06-01**
 
 - initial release
-- [backend] [bugfix]: after a car was deleted, it was possible to add a new car with an already existing id number. New id is now calculated as "the highest id plus one" instead of "array length plus one".
+- [backend] [bugfix] after a car was deleted, it was possible to add a new car with an already existing id number. New id is now calculated as "the highest id plus one" instead of "array length plus one".

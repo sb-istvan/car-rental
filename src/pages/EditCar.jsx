@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { supabase } from '../api-supabase'
 
-function EditCar({ carToEdit }) {
+export default function EditCar({ carToEdit }) {
   const [carMake, setCarMake] = useState(carToEdit?.make)
   const [carModel, setCarModel] = useState(carToEdit?.model)
   const [carYear, setCarYear] = useState(carToEdit?.year)
@@ -17,22 +17,11 @@ function EditCar({ carToEdit }) {
         color: carColor,
       }
 
-      // fetch
-      // const response = await fetch(`http://localhost:333/cars/${carToEdit.id}`, {
-      //     method: 'PUT',
-      //     headers: {
-      //         'Content-Type': 'application-json'
-      //     },
-      //     body: JSON.stringify(carData)
-      // })
-
-      // axios
-      const response = await axios.put(
-        `http://localhost:3333/cars/${carToEdit.id}`,
-        carData,
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      if (response.status === 200) window.location.href = `/${carToEdit.id}`
+      const response = await supabase
+        .from('cars')
+        .update(carData)
+        .eq('id', carToEdit.id)
+      if (response.status === 204) window.location.href = `/${carToEdit.id}`
     } catch (error) {
       console.error('Error', error)
     }
@@ -78,5 +67,3 @@ function EditCar({ carToEdit }) {
     </div>
   )
 }
-
-export default EditCar

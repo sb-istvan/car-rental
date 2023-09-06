@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { supabase } from '../api-supabase'
 
-function AddCar() {
+export default function AddCar() {
   const [carMake, setCarMake] = useState('')
   const [carModel, setCarModel] = useState('')
   const [carYear, setCarYear] = useState('')
@@ -16,27 +16,9 @@ function AddCar() {
         color: carColor,
       }
 
-      // fetch
-      // const response = await fetch('http://localhost:3333/cars', {
-      //     method: 'POST',
-      //     headers: {
-      //         'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify(carData)
-      // })
-      // if (response.status === 200) {
-      //     const data = await response.json()
-      //     window.location.href = `/${data.id}`
-      // }
-
-      // axios
-      const response = await axios.post(
-        'http://localhost:3333/cars/',
-        carData,
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      if (response.status === 200) {
-        window.location.href = `/${response.data.id}`
+      const response = await supabase.from('cars').insert(carData)
+      if (response.status === 201) {
+        window.location.href = `/`
       }
     } catch (error) {
       console.error('Error', error)
@@ -83,5 +65,3 @@ function AddCar() {
     </div>
   )
 }
-
-export default AddCar
