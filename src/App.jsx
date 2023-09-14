@@ -1,6 +1,8 @@
 import { Suspense, lazy, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+const Header = lazy(() => import('./components/Header.jsx'))
+const Login = lazy(() => import('./pages/Login.jsx'))
 const CarList = lazy(() => import('./pages/CarList.jsx'))
 const CarDetail = lazy(() => import('./pages/CarDetail.jsx'))
 const EditCar = lazy(() => import('./pages/EditCar.jsx'))
@@ -12,12 +14,7 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <Link to="/">
-          <h1>Car Rental</h1>
-        </Link>
-        <Link to="/add">
-          <button>Add new car</button>
-        </Link>
+        <Header />
         <Routes>
           <Route
             path="/"
@@ -46,8 +43,16 @@ export default function App() {
           <Route
             path="/add"
             element={
-              <Suspense fallback={<></>}>
+              <Suspense fallback={<p>Loading...</p>}>
                 <AddCar />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<p>Loading...</p>}>
+                <Login />
               </Suspense>
             }
           />
