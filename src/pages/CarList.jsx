@@ -1,36 +1,33 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { supabase } from '../api-supabase'
+import { Suspense } from 'react'
+import { Link, useLoaderData, defer, Await } from 'react-router-dom'
+import { getCars } from '../api-supabase'
+
+export function loader() {
+  return defer({ cars: getCars() })
+}
 
 export default function CarList() {
-  const [cars, setCars] = useState([])
+  const carsPromise = useLoaderData()
 
-  async function getCars() {
-    try {
-      const { data } = await supabase.from('cars').select('*')
-      setCars(data)
-    } catch (error) {
-      console.error('Data fetching error:', error)
-    }
+  function renderCarList(cars) {
+    return cars.map((car) => {
+      return (
+        <div key={car.id}>
+          <p>
+            #{car.id}: {car.make} {car.model} ({car.year}){' '}
+            <Link to={`/${car.id}`}>Car details</Link>
+          </p>
+        </div>
+      )
+    })
   }
-
-  useEffect(() => {
-    getCars()
-  }, [])
 
   return (
     <>
       <h2>Car List</h2>
-      {cars?.map((car) => {
-        return (
-          <div key={car?.id}>
-            <p>
-              #{car?.id}: {car?.make} {car?.model} ({car?.year}){' '}
-              <Link to={`/${car?.id}`}>Car details</Link>
-            </p>
-          </div>
-        )
-      })}
+      <Suspense fallback={<p>Loading cars...!!44!</p>}>
+        <Await resolve={carsPromise.cars}>{renderCarList}</Await>
+      </Suspense>
     </>
   )
 }

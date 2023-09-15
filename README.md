@@ -27,6 +27,10 @@ To start the development server, type `npm run dev`
 
 ## Changelog
 
+**2023-09-15**
+
+- [frontend] [refactor] Data fetching is now made via React Router's loader function. This eliminates the need of useState and useEffect in the frontend code. Main page and Car details page work this way now. Other pages still need rewriting. #todo
+
 **2023-09-14**
 
 - [backend] Basic authentication of Supabase is now used. Only read access is granted without signing in. To modify and add cars you need to log in.
