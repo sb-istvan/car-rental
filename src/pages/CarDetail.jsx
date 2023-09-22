@@ -1,22 +1,30 @@
 import { Suspense } from 'react'
-import { Link, useLoaderData, defer, Await } from 'react-router-dom'
+import {
+  Link,
+  useLoaderData,
+  defer,
+  Await,
+  Form,
+  redirect,
+} from 'react-router-dom'
+import { supabase } from '../api-supabase'
 import { getCarDetails } from '../api-supabase'
 
 export function loader({ params }) {
   return defer({ car: getCarDetails(params.carId) })
 }
 
+export async function action({ params }) {
+  const { error } = await supabase.from('cars').delete().eq('id', params.carId)
+  if (error) {
+    alert(error.error_description || error.message)
+  } else {
+    return redirect('/')
+  }
+  return null
+}
 export default function CarDetail() {
   const carPromise = useLoaderData()
-
-  const deleteCar = async () => {
-    try {
-      const response = await supabase.from('cars').delete().eq('id', carId)
-      if (response.status === 204) window.location.href = '/'
-    } catch (error) {
-      console.error('Error', error)
-    }
-  }
 
   return (
     <div
@@ -44,15 +52,12 @@ export default function CarDetail() {
                     alignItems: 'center',
                   }}
                 >
-                  <Link to={'edit'}>
+                  <Link to="edit">
                     <button style={{ marginRight: 10 }}>Edit car</button>
                   </Link>
-                  <button
-                    style={{ marginLeft: 10 }}
-                    onClick={() => deleteCar()}
-                  >
-                    Delete car
-                  </button>
+                  <Form method="post" replace>
+                    <button style={{ marginLeft: 10 }}>Delete car</button>
+                  </Form>
                 </div>
               </>
             )

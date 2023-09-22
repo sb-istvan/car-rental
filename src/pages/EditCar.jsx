@@ -1,69 +1,67 @@
-import React, { useState } from 'react'
+import { Suspense } from 'react'
+import { Form, defer, redirect, Await, useLoaderData } from 'react-router-dom'
 import { supabase } from '../api-supabase'
+import { getCarDetails } from '../api-supabase'
 
-export default function EditCar({ carToEdit }) {
-  const [carMake, setCarMake] = useState(carToEdit?.make)
-  const [carModel, setCarModel] = useState(carToEdit?.model)
-  const [carYear, setCarYear] = useState(carToEdit?.year)
-  const [carColor, setCarColor] = useState(carToEdit?.color)
+export async function loader({ params }) {
+  return defer({ car: getCarDetails(params.carId) })
+  // TODO: there should be a way to extract data from CarDetail page instead of a repeated query from the database. <Form> `state` maybe?
+}
 
-  const editCar = async () => {
-    try {
-      const carData = {
-        id: carToEdit.id,
-        make: carMake,
-        model: carModel,
-        year: carYear,
-        color: carColor,
-      }
-
-      const response = await supabase
-        .from('cars')
-        .update(carData)
-        .eq('id', carToEdit.id)
-      if (response.status === 204) window.location.href = `/${carToEdit.id}`
-    } catch (error) {
-      console.error('Error', error)
-    }
+export async function action({ request, params }) {
+  const formData = await request.formData()
+  const updatedCarData = {
+    make: formData.get('make'),
+    model: formData.get('model'),
+    year: formData.get('year'),
+    color: formData.get('color'),
   }
+  const { error } = await supabase
+    .from('cars')
+    .update(updatedCarData)
+    .eq('id', params.carId)
+  if (error) {
+    alert(error.error_description || error.message)
+  } else {
+    return redirect(`/${params.carId}`)
+  }
+  return null
+}
+
+export default function EditCar() {
+  const carPromise = useLoaderData()
 
   return (
-    <div id="editcar">
+    <Form method="post" id="editcar">
       <h2>Edit Car Details</h2>
-      <div>
-        <label>Car Make</label>
-        <input
-          type="text"
-          value={carMake}
-          onChange={(e) => setCarMake(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Car Model</label>
-        <input
-          type="text"
-          value={carModel}
-          onChange={(e) => setCarModel(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Car Year</label>
-        <input
-          type="text"
-          value={carYear}
-          onChange={(e) => setCarYear(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Car Color</label>
-        <input
-          type="text"
-          value={carColor}
-          onChange={(e) => setCarColor(e.target.value)}
-        />
-      </div>
+      <Suspense fallback={<p>Loading car details to edit...!!44!</p>}>
+        <Await resolve={carPromise.car}>
+          {(car) => {
+            return (
+              <>
+                <div>
+                  <label>Car Make</label>
+                  <input name="make" type="text" defaultValue={car.make} />
+                </div>
+                <div>
+                  <label>Car Model</label>
+                  <input name="model" type="text" defaultValue={car.model} />
+                </div>
+                <div>
+                  <label>Car Year</label>
+                  <input name="year" type="text" defaultValue={car.year} />
+                </div>
+                <div>
+                  <label>Car Color</label>
+                  <input name="color" type="text" defaultValue={car.color} />
+                </div>
 
-      <button onClick={() => editCar()}>Edit Car</button>
-    </div>
+                <button>Edit Car</button>
+              </>
+            )
+          }}
+        </Await>
+      </Suspense>
+    </Form>
   )
 }

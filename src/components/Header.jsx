@@ -27,20 +27,21 @@ export default function Header() {
         <p>Add new car</p>
       </Link>
 
-      <p>
+      <div>
         {session ? (
-          <>
+          <p>
             Logged in with {session.user.email} |{' '}
             <Link to="/" onClick={loggingOut}>
               Logout
             </Link>
-          </>
+          </p>
         ) : (
-          <>
-            Not logged in | <Link to="/login">Login</Link>
-          </>
+          <p>
+            Not logged in | <Link to="/login">Log in</Link> or{' '}
+            <Link to="/signup">sign up</Link>
+          </p>
         )}
-      </p>
+      </div>
     </>
   )
 }

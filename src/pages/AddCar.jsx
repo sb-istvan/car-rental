@@ -1,67 +1,48 @@
-import { useState } from 'react'
 import { supabase } from '../api-supabase'
+import { Form, redirect, useNavigation } from 'react-router-dom'
+
+export async function action({ request }) {
+  const formData = await request.formData()
+  const newCarData = {
+    make: formData.get('make'),
+    model: formData.get('model'),
+    year: formData.get('year'),
+    color: formData.get('color'),
+  }
+  const { error } = await supabase.from('cars').insert(newCarData)
+  if (error) {
+    alert(error.error_description || error.message)
+  } else {
+    return redirect('/')
+  }
+  return null
+}
 
 export default function AddCar() {
-  const [carMake, setCarMake] = useState('')
-  const [carModel, setCarModel] = useState('')
-  const [carYear, setCarYear] = useState('')
-  const [carColor, setCarColor] = useState('')
-
-  const addCar = async () => {
-    try {
-      const carData = {
-        make: carMake,
-        model: carModel,
-        year: carYear,
-        color: carColor,
-      }
-
-      const response = await supabase.from('cars').insert(carData)
-      if (response.status === 201) {
-        window.location.href = `/`
-      }
-    } catch (error) {
-      console.error('Error', error)
-    }
-  }
-
+  const { state } = useNavigation()
   return (
-    <div id="addcar">
+    <Form method="post" id="addcar">
       <h2>Add Car</h2>
       <div>
         <label>Make:</label>
-        <input
-          type="text"
-          value={carMake}
-          onChange={(e) => setCarMake(e.target.value)}
-        />
+        <input name="make" type="text" required={true} />
       </div>
       <div>
         <label>Model:</label>
-        <input
-          type="text"
-          value={carModel}
-          onChange={(e) => setCarModel(e.target.value)}
-        />
+        <input name="model" type="text" required={true} />
       </div>
       <div>
         <label>Year of manufacture:</label>
-        <input
-          type="text"
-          value={carYear}
-          onChange={(e) => setCarYear(e.target.value)}
-        />
+        <input name="year" type="text" required={true} />
       </div>
       <div>
         <label>Color:</label>
-        <input
-          type="text"
-          value={carColor}
-          onChange={(e) => setCarColor(e.target.value)}
-        />
+        <input name="color" type="text" required={true} />
       </div>
 
-      <button onClick={() => addCar()}>Add Car</button>
-    </div>
+      <button disabled={state === 'submitting'}>
+        {state === 'submitting' ? 'Adding new car...' : 'Add new car'}
+      </button>
+    </Form>
   )
 }

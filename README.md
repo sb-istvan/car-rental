@@ -27,6 +27,11 @@ To start the development server, type `npm run dev`
 
 ## Changelog
 
+**2023-09-22**
+
+- [frontend] [auth] Login and signup is now functional with email+password. Magic link is temporarily removed.
+- [frontend] [refactor] React Router's loaders and actions are used on the entire site now. Remained from the previous update, functions of adding new car, editing car and deleting car are now refactored this way.
+
 **2023-09-15**
 
 - [frontend] [refactor] Data fetching is now made via React Router's loader function. This eliminates the need of useState and useEffect in the frontend code. Main page and Car details page work this way now. Other pages still need rewriting. #todo
