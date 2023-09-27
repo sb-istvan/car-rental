@@ -1,3 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  padding: 0.5rem;
+}
+button {
+  font-family: inherit;
+}
+
+header {
+  padding-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+header > h1 {
+  text-align: center;
+}
+
+header > h1 > a,
+header > h1 > a:visited {
+  color: #000000;
+  text-decoration: none;
+}
+
+#login-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+main {
+  padding-block: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 #addcar,
 #editcar {
   display: flex;

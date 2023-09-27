@@ -4,16 +4,13 @@
 
 This repository is created for learning developing websites in React and working with APIs. By no means does it contain production code.
 
-## Base
-
-The initial release is based on [this tutorial on freecodecamp.org](https://www.freecodecamp.org/news/build-consume-and-document-a-rest-api/) by Germán Cocca. It is renamed from "Pet Shelter" to "Car Rental" in every occurance, from displayed text to variable names.
-
 ## Features
 
 - Listing cars
 - Adding new car
 - Modifying existing car
 - Deleting car
+- User authentication
 
 ## Backend
 
@@ -21,20 +18,25 @@ The backend is based on Supabase (open-source Firebase alternative). Data is sto
 
 ## Frontend
 
-For the frontend, React and React Router are used.
+For the frontend, React and React Router are used with Vite.
 
 To start the development server, type `npm run dev`
 
 ## Changelog
 
+**2023-09-27**
+
+- [frontend] [auth] Login with Google Account is now implemented! It works, however it does throw a few errors in browser's console during the process. Further investigation will be needed. #todo
+- [frontend] [design] Minimal design introduced in header with login icon. Other parts of the side also needs a decent basic layout. #todo
+
 **2023-09-22**
 
-- [frontend] [auth] Login and signup is now functional with email+password. Magic link is temporarily removed.
+- [frontend] [auth] Login and signup is now functional with email+password. Magic link support is removed due to Supabase limit of 4 email/day.
 - [frontend] [refactor] React Router's loaders and actions are used on the entire site now. Remained from the previous update, functions of adding new car, editing car and deleting car are now refactored this way.
 
 **2023-09-15**
 
-- [frontend] [refactor] Data fetching is now made via React Router's loader function. This eliminates the need of useState and useEffect in the frontend code. Main page and Car details page work this way now. Other pages still need rewriting. #todo
+- [frontend] [refactor] Data fetching is now made via React Router's loader function. This eliminates the need of useState and useEffect in the frontend code. Main page and Car details page work this way now. Other pages still need rewriting. (Done on 2023-09-22)
 
 **2023-09-14**
 
@@ -54,5 +56,5 @@ To start the development server, type `npm run dev`
 
 **2023-06-01**
 
-- Initial release
+- Initial release based on [this tutorial on freecodecamp.org](https://www.freecodecamp.org/news/build-consume-and-document-a-rest-api/) by Germán Cocca.
 - [backend] [bugfix] after a car was deleted, it was possible to add a new car with an already existing id number. New id is now calculated as "the highest id plus one" instead of "array length plus one".

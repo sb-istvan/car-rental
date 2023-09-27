@@ -15,7 +15,7 @@ export default function CarList() {
         <div key={car.id}>
           <p>
             #{car.id}: {car.make} {car.model} ({car.year}){' '}
-            <Link to={`/${car.id}`}>Car details</Link>
+            <Link to={`/${car.id}`}>Details</Link>
           </p>
         </div>
       )
@@ -28,6 +28,7 @@ export default function CarList() {
       <Suspense fallback={<p>Loading cars...!!44!</p>}>
         <Await resolve={carsPromise.cars}>{renderCarList}</Await>
       </Suspense>
+      <Link to="/add">Add new car</Link>
     </>
   )
 }
