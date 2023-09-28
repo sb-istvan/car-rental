@@ -1,5 +1,11 @@
 # Car Rental System
 
+## Contents
+
+1. [Description](#introduction)
+2. [Installation](#installation)
+3. [Changelog](#changelog)
+
 ## Introduction
 
 This repository is created for learning developing websites in React and working with APIs. By no means does it contain production code.
@@ -20,9 +26,17 @@ The backend is based on Supabase (open-source Firebase alternative). Data is sto
 
 For the frontend, React and React Router are used with Vite.
 
+## Installation
+
 To start the development server, type `npm run dev`
+(detailed description coming soon)
 
 ## Changelog
+
+**2023-09-27**
+
+- [frontend] [auth] Protected routes are now functional when trying to add new car to the database. Protecting other routes will also be implemented. #todo
+- [frontend] [design] Login screen has now some kind of styling. Other pages will come next.
 
 **2023-09-27**
 

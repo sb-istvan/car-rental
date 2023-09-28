@@ -1,7 +1,12 @@
+import { useState, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { requireAuth, supabase } from './api-supabase'
 
 import Layout from './components/Layout'
-import Login, { action as loginAction } from './pages/Login'
+import Login, {
+  action as loginAction,
+  loader as loginLoader,
+} from './pages/Login'
 import Signup, { action as signupAction } from './pages/Signup'
 import CarList, { loader as carListLoader } from './pages/CarList'
 import CarDetail, {
@@ -15,9 +20,25 @@ import EditCar, {
 import AddCar, { action as addCarAction } from './pages/AddCar'
 
 export default function App() {
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
   const router = createBrowserRouter([
     {
-      element: <Layout />,
+      element: <Layout session={session} />,
       children: [
         {
           path: '/',
@@ -28,6 +49,7 @@ export default function App() {
           path: 'login',
           element: <Login />,
           action: loginAction,
+          loader: loginLoader,
         },
         {
           path: 'signup',
@@ -38,6 +60,7 @@ export default function App() {
           path: 'add',
           element: <AddCar />,
           action: addCarAction,
+          loader: async ({ request }) => await requireAuth(request, session),
         },
         {
           path: ':carId',
