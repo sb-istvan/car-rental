@@ -6,8 +6,10 @@ import {
   useNavigation,
   useLoaderData,
 } from 'react-router-dom'
+import ErrorMessage from '../components/ErrorMessage'
 
 export async function action({ request }) {
+  const pathname = new URL(request.url).searchParams.get('redirectTo') || '/'
   const formData = await request.formData()
   const email = formData.get('email')
   const password = formData.get('password')
@@ -20,7 +22,8 @@ export async function action({ request }) {
     if (error) {
       alert(error.error_description || error.message)
     } else {
-      return redirect('/')
+      console.log(pathname)
+      return redirect('/') // TODO: redirecting to `pathname` does not work, find the reason
     }
   } else if (loginButton === 'withGoogle') {
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -41,7 +44,6 @@ export async function action({ request }) {
 }
 
 export function loader({ request }) {
-  // const url = new URL(request.url)
   return new URL(request.url).searchParams.get('message')
 }
 
@@ -51,12 +53,11 @@ export default function Login() {
 
   return (
     <>
-      {message && <p>{message}</p>}
-      <h2>User Login</h2>
+      <ErrorMessage message={message} />
+      <h2>User login</h2>
       <Form method="post" replace className="login-form">
         <div className="input-container">
           <label htmlFor="email">Email address:</label>
-
           <input name="email" type="email" />
         </div>
         <div className="input-container">

@@ -21,42 +21,20 @@ export async function action({ request }) {
 export default function Signup() {
   const { state } = useNavigation()
 
-  // async function loginMagicLink(e) {
-  //   e.preventDefault()
-  //   setLoading(true)
-  //   const { error } = await supabase.auth.signInWithOtp({ email })
-  //   if (error) {
-  //     alert(error.error_description || error.message)
-  //   } else {
-  //     alert('Check your email for the login link!')
-  //   }
-  //   setLoading(false)
-  // }
-
   return (
     <>
-      {/* <h2>Login with magic link</h2>
-      <form onSubmit={loginMagicLink}>
-        <p>Email address:</p>
-        <input
-          type="email"
-          value={email}
-          required={true}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button disabled={loading}>
-          {loading ? 'Loading...' : 'Send magic link'}
-        </button>
-      </form> */}
-
-      <h2>Sign up with email and password</h2>
-      <Form method="post" replace>
-        <label htmlFor="email">Email address:</label>
-        <input name="email" type="email" required={true} />
-        <label htmlFor="password">Password:</label>
-        <input name="password" type="password" required={true} />
+      <h2>User sign up</h2>
+      <Form method="post" replace className="login-form">
+        <div className="input-container">
+          <label htmlFor="email">Email address:</label>
+          <input name="email" type="email" required={true} />
+        </div>
+        <div className="input-container">
+          <label htmlFor="password">Password:</label>
+          <input name="password" type="password" required={true} />
+        </div>
         <button disabled={state === 'submitting'}>
-          {state === 'submitting' ? 'Sign up...' : 'Sign up'}
+          {state === 'submitting' ? 'Signing up...' : 'Sign up'}
         </button>
       </Form>
       <p>

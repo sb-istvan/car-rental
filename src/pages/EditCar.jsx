@@ -1,12 +1,7 @@
 import { Suspense } from 'react'
-import { Form, defer, redirect, Await, useLoaderData } from 'react-router-dom'
+import { Form, redirect, Await, useLoaderData } from 'react-router-dom'
 import { supabase } from '../api-supabase'
-import { getCarDetails } from '../api-supabase'
-
-export async function loader({ params }) {
-  return defer({ car: getCarDetails(params.carId) })
-  // TODO: there should be a way to extract data from CarDetail page instead of a repeated query from the database. <Form> `state` maybe?
-}
+import LoadingAnimation from '../components/LoadingAnimation'
 
 export async function action({ request, params }) {
   const formData = await request.formData()
@@ -34,25 +29,25 @@ export default function EditCar() {
   return (
     <Form method="post" id="editcar">
       <h2>Edit Car Details</h2>
-      <Suspense fallback={<p>Loading car details to edit...!!44!</p>}>
+      <Suspense fallback={<LoadingAnimation />}>
         <Await resolve={carPromise.car}>
           {(car) => {
             return (
               <>
                 <div>
-                  <label>Car Make</label>
+                  <label>Make</label>
                   <input name="make" type="text" defaultValue={car.make} />
                 </div>
                 <div>
-                  <label>Car Model</label>
+                  <label>Model</label>
                   <input name="model" type="text" defaultValue={car.model} />
                 </div>
                 <div>
-                  <label>Car Year</label>
+                  <label>Year</label>
                   <input name="year" type="text" defaultValue={car.year} />
                 </div>
                 <div>
-                  <label>Car Color</label>
+                  <label>Color</label>
                   <input name="color" type="text" defaultValue={car.color} />
                 </div>
 

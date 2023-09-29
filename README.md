@@ -1,12 +1,12 @@
-# Car Rental System
+# Car Rental Imagined
 
 ## Contents
 
 1. [Description](#introduction)
 2. [Installation](#installation)
-3. [Changelog](#changelog)
+3. [Changelog](#changelog) - last update: 2023-09-29
 
-## Introduction
+## Description
 
 This repository is created for learning developing websites in React and working with APIs. By no means does it contain production code.
 
@@ -17,6 +17,7 @@ This repository is created for learning developing websites in React and working
 - Modifying existing car
 - Deleting car
 - User authentication
+- Protected routes/actions
 
 ## Backend
 
@@ -28,12 +29,28 @@ For the frontend, React and React Router are used with Vite.
 
 ## Installation
 
+### Install Supabase locally
+
+(this section is not finished yet)
+
+- Follow this guide https://supabase.com/docs/guides/self-hosting/docker
+- etc...
+
 To start the development server, type `npm run dev`
-(detailed description coming soon)
+
+## Known issues
+
+- [Login.jsx] After logging in coming from a protected route, redirecting back to that protected route does not work. It sends you back to the login page again as if the login procedure did not occur. However, redirecting to any unprotected route works fine.
 
 ## Changelog
 
-**2023-09-27**
+**2023-09-29**
+
+- [frontend] [auth] All routes/actions that need to be protected from non-authenticated users are now protected (`/add`, `/edit`, deleting action)
+- [frontend] [design] Basic styling is new implemented throughout the entire site.
+- [frontend] [design] [important] Loading animation is now implemented (source: http://loading.io)
+
+**2023-09-28**
 
 - [frontend] [auth] Protected routes are now functional when trying to add new car to the database. Protecting other routes will also be implemented. #todo
 - [frontend] [design] Login screen has now some kind of styling. Other pages will come next.

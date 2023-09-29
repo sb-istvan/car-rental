@@ -7,23 +7,26 @@ export const supabase = createClient(
 )
 
 export async function getCars() {
-  try {
-    const { data } = await supabase
-      .from('cars')
-      .select('id, make, model, year')
-      .order('id', { ascending: true })
+  const { data, error } = await supabase
+    .from('cars')
+    .select('id, make, model, year')
+    .order('id', { ascending: true })
+  if (error) {
+    alert(error.error_description || error.message)
+  } else {
     return data
-  } catch (error) {
-    console.error('Data fetching error:', error)
   }
 }
 
 export async function getCarDetails(carId) {
-  try {
-    const { data } = await supabase.from('cars').select('*').eq('id', carId)
+  const { data, error } = await supabase
+    .from('cars')
+    .select('*')
+    .eq('id', carId)
+  if (error) {
+    alert(error.error_description || error.message)
+  } else {
     return data[0]
-  } catch (error) {
-    console.error('Data fetching error:', error)
   }
 }
 

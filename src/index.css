@@ -13,6 +13,8 @@ body {
 button,
 input {
   font-family: inherit;
+  font-size: inherit;
+  padding: 0.5rem;
 }
 
 header {
@@ -40,12 +42,20 @@ main {
   gap: 0.5rem;
 }
 
+.error-message {
+  color: firebrick;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  padding-left: 3rem;
+  padding-left: 0.25rem;
 }
 
 .input-container {
@@ -68,7 +78,6 @@ main {
 .login-form > button {
   font-size: inherit;
   width: 15rem;
-  padding: 0.5rem;
 }
 
 .login-form > p {
@@ -93,6 +102,19 @@ main {
 #addcar > button,
 #editcar > button {
   margin-top: 20px;
+}
+
+.car-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.button-group {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 footer {
