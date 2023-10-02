@@ -73,7 +73,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+## .env file is allowed in this project. It only contains general purpose Supabase token for running Supabase locally
 .env.development.local
 .env.test.local
 .env.production.local

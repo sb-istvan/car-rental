@@ -1,10 +1,19 @@
-import { createClient } from '@supabase/supabase-js'
 import { redirect } from 'react-router-dom'
+import { createClient } from '@supabase/supabase-js'
 
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_TOKEN
-)
+const supabaseFromLocalhost = true
+
+let supabaseUrl = null
+let supabaseToken = null
+if (supabaseFromLocalhost) {
+  supabaseUrl = import.meta.env.VITE_SUPABASE_LOCAL_URL
+  supabaseToken = import.meta.env.VITE_SUPABASE_LOCAL_TOKEN
+} else {
+  supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+  supabaseToken = import.meta.env.VITE_SUPABASE_TOKEN
+}
+
+export const supabase = createClient(supabaseUrl, supabaseToken)
 
 export async function getCars() {
   const { data, error } = await supabase

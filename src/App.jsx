@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,23 +16,10 @@ import CarList, { loader as carListLoader } from './pages/CarList'
 import CarDetails, { loader as carDetailsLoader } from './pages/CarDetails'
 import EditCar, { action as editCarAction } from './pages/EditCar'
 import AddCar, { action as addCarAction } from './pages/AddCar'
+import useAuth from './components/Auth'
 
 export default function App() {
-  const [session, setSession] = useState(null)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
+  const session = useAuth(null)
 
   const router = createBrowserRouter([
     {
