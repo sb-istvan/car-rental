@@ -4,7 +4,7 @@
 
 1. [Description](#introduction)
 2. [Installation](./installation.md)
-3. [Changelog](./changelog.md) (last updated on 2023-09-29)
+3. [Changelog](./changelog.md) (last updated on 2023-10-02)
 
 ## Description
 

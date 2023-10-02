@@ -10,9 +10,9 @@ In order to try this website on your machine locally, you need to install the fo
 
 ### Source code
 
-1. Clone this repository to your machine with the command `git clone https://github.com/sb-istvan/car-rental`
+- Clone this repository to your machine with the command `git clone https://github.com/sb-istvan/car-rental`
 
-2. Install the necessary node dependencies: `npm install`
+- Install the necessary node dependencies: `npm install`
 
 ### Install Supabase locally
 
